@@ -1,20 +1,7 @@
 var socket = io();
 var messages = document.getElementById('messages');
 
-/*
-form.addEventListener('submit', function (e) {
-    // websocketを使うのでフォームの送信をキャンセル
-    e.preventDefault();
-
-    // イベントを発火しデータを受け渡す
-    socket.emit('chat', chat.value);
-    chat.value = '';
-});
-*/
-
-// サーバ側からchatイベントを待ち受ける
 socket.on('chat', function (data) {
-
     writeData(data);
 });
 
@@ -27,14 +14,14 @@ function writeData(data) {
     }
 }
 
-function output(d) {
-    socket.emit('chat', d);
+function output(data) {
+    socket.emit('chat', data);
 }
 
 function deviceOrientationHandler(event) {
     output({
         beta: event.beta,
-        gamma: event.ganma,
+        gamma: event.gamma,
         alpha: event.alpha
     })
 }
@@ -43,6 +30,7 @@ function showPosition(position) {
     output({
         lat: position.coords.latitude,
         lng: position.coords.longitude,
+        altitude: position.coords.altitude,
         accuracy: Math.floor(position.coords.accuracy),
         heading: position.coords.heading,
     });
@@ -54,7 +42,13 @@ window.addEventListener(
 );
 
 if (navigator.geolocation) {
-    navigator.geolocation.watchPosition(showPosition);
+    navigator.geolocation.watchPosition(showPosition, function (error) {
+        console.log(error);
+    }, {
+        "enableHighAccuracy": true,
+        "timeout": 1000000,
+        "maximumAge": 0,
+    });
 } else {
-    console.log("Geolocation is not supported by this browser.");
+    alert("Geolocation is not supported by this browser.");
 }
