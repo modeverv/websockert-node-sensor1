@@ -26,7 +26,7 @@ function deviceOrientationHandler(event) {
     })
 }
 
-function showPosition(position) {
+function positionHandler(position) {
     output({
         lat: position.coords.latitude,
         lng: position.coords.longitude,
@@ -36,19 +36,3 @@ function showPosition(position) {
     });
 }
 
-window.addEventListener(
-    'deviceorientation',
-    deviceOrientationHandler
-);
-
-if (navigator.geolocation) {
-    navigator.geolocation.watchPosition(showPosition, function (error) {
-        console.log(error);
-    }, {
-        "enableHighAccuracy": true,
-        "timeout": 1000000,
-        "maximumAge": 0,
-    });
-} else {
-    alert("Geolocation is not supported by this browser.");
-}

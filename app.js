@@ -7,7 +7,13 @@ var io = require('socket.io')(server);
 
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/read.html');
+});
+app.get('/read.html', (req, res) => {
+    res.sendFile(__dirname + '/read.html');
+});
+app.get('/send.html', (req, res) => {
+    res.sendFile(__dirname + '/send.html');
 });
 app.get('/html.js', (req, res) => {
     res.sendFile(__dirname + '/html.js');

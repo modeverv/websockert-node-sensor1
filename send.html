@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>WebSocket</title>
+</head>
+
+<body>
+    <div>
+        <h1>Send</h1>
+        <ul>
+            <li>
+                <a href="/send.html">sned.html</a>
+            </li>
+            <li>
+                <a href="/read.html">read.html</a>
+            </li>
+        </ul>
+    </div>
+    <div>beta:
+        <span id="beta"></span>
+    </div>
+    <div>gamma:
+        <span id="gamma"></span>
+    </div>
+    <div>alpha:
+        <span id="alpha"></span>
+    </div>
+    <div>lat:
+        <span id="lat"></span>
+    </div>
+    <div>lng:
+        <span id="lng"></span>
+    </div>
+    <div>altitude:
+        <span id="altitude"></span>
+    </div>
+    <div>accuracy:
+        <span id="accuracy"></span>
+    </div>
+    <div>heading:
+        <span id="heading"></span>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/html.js"></script>
+    <script>
+        /* set event */
+        window.addEventListener('deviceorientation', deviceOrientationHandler);
+        if (navigator.geolocation) {
+            navigator.geolocation.watchPosition(positionHandler,
+                function (error) {
+                    console.log(error);
+                }, {
+                    "enableHighAccuracy": true,
+                    "timeout": 1000000,
+                    "maximumAge": 0,
+                });
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    </script>
+</body>
+
+</html>
